@@ -7,12 +7,15 @@ import br.ce.wcaquino.servicos.LocacaoService;
 import br.ce.wcaquino.utils.DataUtils;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ErrorCollector;
 
 import java.util.Date;
 
 public class LocacaoServiceTest {
-
+    @Rule
+    public ErrorCollector error = new ErrorCollector();
     @Test
     public void teste() {
         //cenario
@@ -21,12 +24,24 @@ public class LocacaoServiceTest {
         Filme filme = new Filme("Filme 1", 2, 5.0);
 
         //acao
-        Locacao locacao = service.alugarFilme(usuario, filme);
+        Locacao locacao;
+        try{
+            locacao = service.alugarFilme(usuario, filme);
+
+            error.checkThat(locacao.getValor(), CoreMatchers.is(5.0));
+            error.checkThat(locacao.getValor(),CoreMatchers.is(CoreMatchers.not(6.0)));
+            error.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()),CoreMatchers.is(true));
+            error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)),CoreMatchers.is(true));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         //verificacao
-        Assert.assertThat(locacao.getValor(), CoreMatchers.is(5.0));
-        Assert.assertThat(locacao.getValor(),CoreMatchers.is(CoreMatchers.not(6.0)));
-        Assert.assertThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()),CoreMatchers.is(true));
-        Assert.assertThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)),CoreMatchers.is(true));
+        //Assert.assertThat(locacao.getValor(), CoreMatchers.is(5.0));
+        //Assert.assertThat(locacao.getValor(),CoreMatchers.is(CoreMatchers.not(6.0)));
+        //Assert.assertThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()),CoreMatchers.is(true));
+        //Assert.assertThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)),CoreMatchers.is(true));
+
+
     }
 }
