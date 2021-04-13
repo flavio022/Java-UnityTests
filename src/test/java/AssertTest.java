@@ -1,4 +1,4 @@
-import br.ce.wcaquino.entidades.Usuario;
+import br.ce.cursosUnityTests.entidades.Usuario;
 import org.junit.Assert;
 import org.junit.Test;
 
