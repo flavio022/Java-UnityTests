@@ -22,20 +22,44 @@ public class LocacaoService {
 		if(filmes == null || filmes.isEmpty()){
 			throw new LocadoraException("Filme Vazio");
 		}
-		Locacao locacao = new Locacao();
 
 		for(Filme filme : filmes ) {
 			if (filme.getEstoque() == 0) {
 				throw new FilmesSemEstoqueExceptions();
 			}
-			locacao.setValor(filme.getPrecoLocacao());
 		}
 
+		for(Filme filme: filmes){
+			if(filme.getEstoque() == 0){
+				throw new FilmesSemEstoqueExceptions();
+			}
+		}
 
+		Locacao locacao = new Locacao();
 		locacao.setFilme(filmes);
 		locacao.setUsuario(usuario);
 		locacao.setDataLocacao(new Date());
+		Double valorTotal = 0d;
+		for(int i=0;i< filmes.size();i++){
+			Filme filme = filmes.get(i);
+			Double valorFilme = filme.getPrecoLocacao();
 
+			if(i==2){
+				valorFilme = valorFilme*0.75;
+			}
+			if(i==3){
+				valorFilme = valorFilme*0.5;
+			}
+			if(i==4){
+				valorFilme = valorFilme*0.25;
+			}
+			if(i==5){
+				valorFilme = valorFilme*0;
+			}
+
+			valorTotal += valorFilme;
+		}
+		locacao.setValor(valorTotal);
 		//Entrega no dia seguinte
 		Date dataEntrega = new Date();
 		dataEntrega = adicionarDias(dataEntrega, 1);
