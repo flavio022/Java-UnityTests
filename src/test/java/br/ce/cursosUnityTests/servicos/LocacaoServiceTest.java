@@ -50,7 +50,7 @@ public class LocacaoServiceTest {
         error.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()),CoreMatchers.is(true));
         error.checkThat(locacao.getDataRetorno(),MatchersProprios.ehHoje());
         error.checkThat(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)),CoreMatchers.is(true));
-        error.checkThat(locacao.getDataRetorno(),MatchersProprios.ehHojeComDiferencaDeDias(1);
+        error.checkThat(locacao.getDataRetorno(),MatchersProprios.ehHojeComDiferencaDeDias(1));
     }
 
     @Test(expected = FilmesSemEstoqueExceptions.class)
