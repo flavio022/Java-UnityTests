@@ -5,6 +5,8 @@ import br.ce.cursosUnityTests.entidades.Locacao;
 import br.ce.cursosUnityTests.entidades.Usuario;
 import br.ce.cursosUnityTests.exceptions.FilmesSemEstoqueExceptions;
 import br.ce.cursosUnityTests.exceptions.LocadoraException;
+import br.ce.cursosUnityTests.servicos.matcher.DiaSemanaMatcher;
+import br.ce.cursosUnityTests.servicos.matcher.MatchersProprios;
 import br.ce.cursosUnityTests.utils.DataUtils;
 import org.hamcrest.CoreMatchers;
 import org.junit.*;
@@ -165,7 +167,7 @@ public class LocacaoServiceTest {
 
     @Test
     public void deveDevolverNaSegundaAoAlugarNoSabado() throws FilmesSemEstoqueExceptions, LocadoraException{
-        Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(),Calendar.SATURDAY));
+        //Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(),Calendar.SATURDAY));
 
         //Cenario
         Usuario usuario = new Usuario("Usuario");
@@ -175,7 +177,11 @@ public class LocacaoServiceTest {
         Locacao retorno = locacaoService.alugarFilme(usuario,filmes);
 
         //Verificacao
+
         boolean ehSegunda = DataUtils.verificarDiaSemana(retorno.getDataRetorno(), Calendar.MONDAY);
-        Assert.assertTrue(ehSegunda);
+        Assert.assertThat(retorno.getDataRetorno(), MatchersProprios.caiEm(Calendar.MONDAY));
+        Assert.assertThat(retorno.getDataRetorno(),MatchersProprios.caiEmUmaSegunda());
+        // Assert.assertThat(retorno.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
+        // Assert.assertTrue(ehSegunda);
     }
 }
