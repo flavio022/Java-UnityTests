@@ -15,6 +15,7 @@ import org.hamcrest.CoreMatchers;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -27,7 +28,7 @@ public class LocacaoServiceTest {
     @Before
     public void setup(){
         locacaoService = new LocacaoService();
-        LocacaoDao locacaoDao = new LocacaoDaoFake();
+        LocacaoDao locacaoDao = Mockito.mock(LocacaoDao.class);
         locacaoService.setLocacaoDao(locacaoDao);
     }
 

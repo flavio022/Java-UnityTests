@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,7 +39,7 @@ public class CalculoValorLocacaoTest {
     public void setup() {
 
         service = new LocacaoService();
-        LocacaoDao locacaoDao = new LocacaoDaoFake();
+        LocacaoDao locacaoDao = Mockito.mock(LocacaoDao.class);
         service.setLocacaoDao(locacaoDao);
     }
 
