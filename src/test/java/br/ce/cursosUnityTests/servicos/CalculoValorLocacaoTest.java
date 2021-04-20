@@ -1,5 +1,7 @@
 package br.ce.cursosUnityTests.servicos;
 
+import br.ce.cursosUnityTests.daos.LocacaoDao;
+import br.ce.cursosUnityTests.daos.LocacaoDaoFake;
 import br.ce.cursosUnityTests.entidades.Filme;
 import br.ce.cursosUnityTests.entidades.Locacao;
 import br.ce.cursosUnityTests.entidades.Usuario;
@@ -34,7 +36,10 @@ public class CalculoValorLocacaoTest {
 
     @Before
     public void setup() {
+
         service = new LocacaoService();
+        LocacaoDao locacaoDao = new LocacaoDaoFake();
+        service.setLocacaoDao(locacaoDao);
     }
 
     private static Filme filme1 = FilmeBuilder.umFilme().agora();

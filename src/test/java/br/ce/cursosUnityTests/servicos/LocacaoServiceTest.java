@@ -1,5 +1,7 @@
 package br.ce.cursosUnityTests.servicos;
 
+import br.ce.cursosUnityTests.daos.LocacaoDao;
+import br.ce.cursosUnityTests.daos.LocacaoDaoFake;
 import br.ce.cursosUnityTests.entidades.Filme;
 import br.ce.cursosUnityTests.entidades.Locacao;
 import br.ce.cursosUnityTests.entidades.Usuario;
@@ -25,6 +27,8 @@ public class LocacaoServiceTest {
     @Before
     public void setup(){
         locacaoService = new LocacaoService();
+        LocacaoDao locacaoDao = new LocacaoDaoFake();
+        locacaoService.setLocacaoDao(locacaoDao);
     }
 
     @Rule
