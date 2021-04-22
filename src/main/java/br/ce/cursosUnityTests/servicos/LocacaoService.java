@@ -18,6 +18,7 @@ import br.ce.cursosUnityTests.utils.DataUtils;
 public class LocacaoService {
 
 	private LocacaoDao dao;
+	private SPCService spcService;
 	
 	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws FilmesSemEstoqueExceptions, LocadoraException {
 
@@ -32,6 +33,10 @@ public class LocacaoService {
 			if (filme.getEstoque() == 0) {
 				throw new FilmesSemEstoqueExceptions();
 			}
+		}
+
+		if(spcService.possuiNegativacao(usuario)){
+			throw new LocadoraException("Usuario negativado!");
 		}
 
 		for(Filme filme: filmes){
@@ -75,6 +80,10 @@ public class LocacaoService {
 	}
 	public void setLocacaoDao(LocacaoDao dao){
 		this.dao = dao;
+	}
+
+	public void setSpcService(SPCService spcService){
+		spcService = spcService;
 	}
 
 }
